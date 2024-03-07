@@ -1,0 +1,95 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "SolarLab.Academy.Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SolarLab.Academy.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SolarLab.Academy.Contracts.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SolarLab.Academy.Contracts/1.0.0": {
+      "type": "project",
+      "path": "../../Contracts/SolarLab.Academy.Contracts/SolarLab.Academy.Contracts.csproj",
+      "msbuildProject": "../../Contracts/SolarLab.Academy.Contracts/SolarLab.Academy.Contracts.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "SolarLab.Academy.Contracts >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\samar\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "E:\\Projects\\SolarLab.Academy\\src\\Apllication\\SolarLab.Academy.AppServices\\SolarLab.Academy.AppServices.csproj",
+      "projectName": "SolarLab.Academy.AppServices",
+      "projectPath": "E:\\Projects\\SolarLab.Academy\\src\\Apllication\\SolarLab.Academy.AppServices\\SolarLab.Academy.AppServices.csproj",
+      "packagesPath": "C:\\Users\\samar\\.nuget\\packages\\",
+      "outputPath": "E:\\Projects\\SolarLab.Academy\\src\\Apllication\\SolarLab.Academy.AppServices\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\samar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "E:\\Projects\\SolarLab.Academy\\src\\Contracts\\SolarLab.Academy.Contracts\\SolarLab.Academy.Contracts.csproj": {
+              "projectPath": "E:\\Projects\\SolarLab.Academy\\src\\Contracts\\SolarLab.Academy.Contracts\\SolarLab.Academy.Contracts.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

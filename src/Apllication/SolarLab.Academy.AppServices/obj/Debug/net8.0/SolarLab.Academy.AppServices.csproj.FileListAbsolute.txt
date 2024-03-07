@@ -1,0 +1,16 @@
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\bin\Debug\net8.0\SolarLab.Academy.AppServices.deps.json
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\bin\Debug\net8.0\SolarLab.Academy.AppServices.dll
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\bin\Debug\net8.0\SolarLab.Academy.AppServices.pdb
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\bin\Debug\net8.0\SolarLab.Academy.Contracts.dll
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\bin\Debug\net8.0\SolarLab.Academy.Contracts.pdb
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.csproj.AssemblyReference.cache
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.AssemblyInfoInputs.cache
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.AssemblyInfo.cs
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.csproj.CoreCompileInputs.cache
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.sourcelink.json
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.csproj.CopyComplete
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.dll
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\refint\SolarLab.Academy.AppServices.dll
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\SolarLab.Academy.AppServices.pdb
+E:\Projects\SolarLab.Academy\src\Apllication\SolarLab.Academy.AppServices\obj\Debug\net8.0\ref\SolarLab.Academy.AppServices.dll
