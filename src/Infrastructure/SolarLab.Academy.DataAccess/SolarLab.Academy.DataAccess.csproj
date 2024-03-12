@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Apllication\SolarLab.Academy.AppServices\SolarLab.Academy.AppServices.csproj" />
       <ProjectReference Include="..\..\Domain\SolarLab.Academy.Domain\SolarLab.Academy.Domain.csproj" />
+      <ProjectReference Include="..\SolarLab.Academy.Infrastructure\SolarLab.Academy.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
