@@ -21,4 +21,9 @@ public class User : BaseEntity
     /// Отчество.
     /// </summary>
     public string MiddleName { get; set; }
+    
+    /// <summary>
+    /// Дата рождения.
+    /// </summary>
+    public DateTime BirthDate { get; set; }
 }

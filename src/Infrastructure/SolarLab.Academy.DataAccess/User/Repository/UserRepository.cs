@@ -1,23 +1,34 @@
-﻿using SolarLab.Academy.AppServices.Users.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.Contracts.Users;
+using SolarLab.Academy.Infrastructure.Repository;
 
 namespace SolarLab.Academy.DataAccess.User.Repository;
 
 /// <inheritdoc />
 public class UserRepository : IUserRepository
 {
-    /// <inheritdoc />
-    public Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellationToken)
-    {
-        var users = UserList();
+    private readonly IRepository<Domain.Users.Entity.User> _repository;
 
-        return Task.Run(() => users.Select(u => new UserDto
+    public UserRepository(IRepository<Domain.Users.Entity.User> repository)
+    {
+        _repository = repository;
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellationToken)
+    {
+        //TODO: Use repository instead
+        var users = UserList();
+        
+        return await Task.Run(()=>users.Select(u => new UserDto
         {
             Id = u.Id,
             FirstName = u.FirstName,
             LastName = u.LastName,
             MiddleName = u.MiddleName,
-            FullName = $"{u.LastName} {u.FirstName} {u.MiddleName}"
+            FullName = $"{u.LastName} {u.FirstName} {u.MiddleName}",
+            BirthDate = u.BirthDate
         }), cancellationToken);
     }
 
@@ -34,7 +45,8 @@ public class UserRepository : IUserRepository
                 Id = Guid.NewGuid(),
                 FirstName = "Иван",
                 LastName = "Иванов",
-                MiddleName = "Иванович"
+                MiddleName = "Иванович",
+                BirthDate = DateTime.Now
             },
 
             new()
@@ -42,7 +54,8 @@ public class UserRepository : IUserRepository
                 Id = Guid.NewGuid(),
                 FirstName = "Петр",
                 LastName = "Петров",
-                MiddleName = "Иванович"
+                MiddleName = "Иванович",
+                BirthDate = DateTime.Now
             }
         ];
     }

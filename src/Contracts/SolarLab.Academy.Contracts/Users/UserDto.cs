@@ -29,4 +29,9 @@ public class UserDto
     /// ФИО.
     /// </summary>
     public string FullName { get; set; }
+    
+    /// <summary>
+    /// Дата рождения.
+    /// </summary>
+    public DateTime BirthDate { get; set; }
 }

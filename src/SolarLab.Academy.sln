@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarLab.Academy.Api", "Hos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarLab.Academy.DataAccess", "Infrastructure\SolarLab.Academy.DataAccess\SolarLab.Academy.DataAccess.csproj", "{47C18B9D-1FC3-45F3-818E-F9957D2C2748}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1E5523E3-E835-4114-95F3-BAD1F9AA941E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,7 @@ Global
 		{038E3168-DEDF-4956-9565-5977DCD2DD3A} = {3C3DAE8F-ADBE-42D2-B83C-560B43E5D65C}
 		{B692317F-692B-4D92-989F-D9906D106E88} = {58A5D4AA-DC6E-4B2D-9CCD-A6354EFFB979}
 		{47C18B9D-1FC3-45F3-818E-F9957D2C2748} = {3C3DAE8F-ADBE-42D2-B83C-560B43E5D65C}
+		{1E5523E3-E835-4114-95F3-BAD1F9AA941E} = {D129ED10-7A22-472F-8112-63BCDA57F3D1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A464CB86-EE0F-4B1F-8B7D-0A6466CE637F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
