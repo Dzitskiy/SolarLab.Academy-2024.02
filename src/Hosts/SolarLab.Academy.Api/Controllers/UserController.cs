@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using SolarLab.Academy.AppServices.Users.Services;
+using SolarLab.Academy.Contracts.Users;
 
 namespace SolarLab.Academy.Api.Controllers;
 
@@ -28,6 +30,9 @@ public class UserController : ControllerBase
     /// <returns>Список пользователей.</returns>
     [HttpGet]
     [Route("all")]
+    [ProducesResponseType(typeof(IEnumerable<UserDto>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken)
     {
         var result = await _userService.GetUsersAsync(cancellationToken);

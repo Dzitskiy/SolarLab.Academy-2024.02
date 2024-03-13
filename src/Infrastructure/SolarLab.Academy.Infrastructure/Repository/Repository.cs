@@ -30,9 +30,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
         return DbSet.Where(predicate).AsNoTracking();
     }
 
-    public Task<TEntity> GetByIdAsync(Guid id)
+    public ValueTask<TEntity?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return DbSet.FindAsync(id);
     }
 
     public Task AddAsync(TEntity model)

@@ -22,7 +22,7 @@ public interface IRepository<TEntity> where TEntity: class
     /// </summary>
     /// <param name="id">Идентификатор сущности</param>
     /// <returns><see cref="TEntity"/></returns>
-    Task<TEntity> GetByIdAsync(Guid id);
+    ValueTask<TEntity?> GetByIdAsync(Guid id);
 
     Task AddAsync(TEntity model);
 
