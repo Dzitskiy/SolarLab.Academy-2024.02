@@ -38,8 +38,8 @@ public class UserRepository : IUserRepository
     /// <returns></returns>
     public static List<Domain.Users.Entity.User> UserList()
     {
-        return
-        [
+        return new List<Domain.Users.Entity.User>
+        {
             new()
             {
                 Id = Guid.NewGuid(),
@@ -57,6 +57,6 @@ public class UserRepository : IUserRepository
                 MiddleName = "Иванович",
                 BirthDate = DateTime.Now
             }
-        ];
+        };
     }
 }

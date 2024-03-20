@@ -1,5 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
 using SolarLab.Academy.Api.Controllers;
+using SolarLab.Academy.AppServices.Validators;
 using SolarLab.Academy.Contracts.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +20,9 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory,
         $"{typeof(UserDto).Assembly.GetName().Name}.xml")));
 });
+
+builder.Services.AddFluentValidationAutoValidation(o => o.DisableDataAnnotationsValidation = true);
+builder.Services.AddValidatorsFromAssembly(typeof(CreateUserValidator).Assembly);
 
 var app = builder.Build();
 
