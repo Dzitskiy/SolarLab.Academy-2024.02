@@ -10,17 +10,14 @@ namespace SolarLab.Academy.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("[controller]")]
+[ProducesResponseType((int)HttpStatusCode.InternalServerError)]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;
-
     /// <summary>
     /// Инициализирует экземпляр <see cref="UserController"/>
     /// </summary>
-    /// <param name="userService">Сервис работы с пользователями.</param>
-    public UserController(IUserService userService)
+    public UserController()
     {
-        _userService = userService;
     }
 
     /// <summary>
@@ -32,11 +29,27 @@ public class UserController : ControllerBase
     [Route("all")]
     [ProducesResponseType(typeof(IEnumerable<UserDto>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken)
     {
-        var result = await _userService.GetUsersAsync(cancellationToken);
+        // TODO временно отключил userService
+        //var result = await _userService.GetUsersAsync(cancellationToken);
 
-        return Ok(result);
+        return Ok(new UserDto());
+    }
+
+    /// <summary>
+    /// Создать пользователя.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpPost]
+    [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.Created)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public async Task<IActionResult> CreateUser(CreateUserRequest request, CancellationToken cancellationToken)
+    {
+        // TODO временно отключил userService
+        // var result = await _userService.CreateUsersAsync(request, cancellationToken);
+        return Created(new Uri($"{Request.Path}/1", UriKind.Relative), new UserDto());
     }
 }
