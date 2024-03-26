@@ -37,11 +37,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 builder.Services.AddScoped<DbContext>(s => s.GetRequiredService<ApplicationDbContext>());
 
-
 builder.Services.AddFluentValidationAutoValidation(o => o.DisableDataAnnotationsValidation = true);
 builder.Services.AddValidatorsFromAssembly(typeof(CreateUserValidator).Assembly);
-
-
 
 
 var app = builder.Build();

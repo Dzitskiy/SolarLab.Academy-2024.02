@@ -24,9 +24,9 @@ public interface IRepository<TEntity> where TEntity: class
     /// <returns><see cref="TEntity"/></returns>
     ValueTask<TEntity?> GetByIdAsync(Guid id);
 
-    Task AddAsync(TEntity model);
+    Task AddAsync(TEntity model, CancellationToken cancellationToken);
 
-    Task UpdateAsync(TEntity model);
+    Task UpdateAsync(TEntity model, CancellationToken cancellationToken);
 
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

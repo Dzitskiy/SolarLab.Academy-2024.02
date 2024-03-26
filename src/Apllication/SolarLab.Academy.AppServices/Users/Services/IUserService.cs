@@ -12,4 +12,12 @@ public interface IUserService
     /// </summary>
     /// <returns>Список пользователей <see cref="UserDto"/>.</returns>
     Task<IEnumerable<UserDto>> GetUsersAsync(CancellationToken cancellationToken);
+
+    ValueTask<UserDto> GetByIdAsync(Guid id);
+
+    Task<Guid> AddAsync(UserDto model, CancellationToken cancellationToken);
+
+    Task UpdateAsync(UserDto model, CancellationToken cancellationToken);
+
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

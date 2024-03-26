@@ -1,4 +1,5 @@
-﻿using SolarLab.Academy.AppServices.Users.Repositories;
+﻿using FluentValidation;
+using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.Contracts.Users;
 
 namespace SolarLab.Academy.AppServices.Users.Services;
@@ -21,5 +22,27 @@ public class UserService : IUserService
     public Task<IEnumerable<UserDto>> GetUsersAsync(CancellationToken cancellationToken)
     {
         return _userRepository.GetAll(cancellationToken);
+    }
+    public async ValueTask<UserDto> GetByIdAsync(Guid id)
+    {
+        return await _userRepository.GetByIdAsync(id);
+    }
+
+    public async Task<Guid> AddAsync(UserDto model, CancellationToken cancellationToken)
+    {
+        model.Id = Guid.NewGuid();
+
+        await _userRepository.AddAsync(model, cancellationToken);
+
+        return model.Id;
+    }
+
+    public async Task UpdateAsync(UserDto model, CancellationToken cancellationToken)
+    {
+        await _userRepository.UpdateAsync(model, cancellationToken);    
+    }
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        await _userRepository.DeleteAsync(id, cancellationToken);
     }
 }

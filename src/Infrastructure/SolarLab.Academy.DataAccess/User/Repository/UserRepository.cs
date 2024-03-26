@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Npgsql.TypeMapping;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.Contracts.Users;
+using SolarLab.Academy.Domain.Users.Entity;
 using SolarLab.Academy.Infrastructure.Repository;
+using System.ComponentModel.DataAnnotations;
+using System.Threading;
 
 namespace SolarLab.Academy.DataAccess.User.Repository;
 
@@ -19,10 +23,7 @@ public class UserRepository : IUserRepository
     public async Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellationToken)
     {
         var users = _repository.GetAll();
-         
-        //TODO: Use repository instead
-        //var users = UserList();
-
+        
         return await Task.Run(() => users.Select(u => new UserDto
         {
             Id = u.Id,
@@ -33,32 +34,45 @@ public class UserRepository : IUserRepository
             BirthDate = u.BirthDate
         }), cancellationToken);
     }
-
-    /// <summary>
-    /// Данные якобы из БД.
-    /// </summary>
-    /// <returns></returns>
-    public static List<Domain.Users.Entity.User> UserList()
+    public ValueTask<UserDto> GetByIdAsync(Guid id)
     {
-        return new List<Domain.Users.Entity.User>
-        {
-            new()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Иван",
-                LastName = "Иванов",
-                MiddleName = "Иванович",
-                BirthDate = DateTime.Now
-            },
+        var user = _repository.GetByIdAsync(id).Result;
 
-            new()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Петр",
-                LastName = "Петров",
-                MiddleName = "Иванович",
-                BirthDate = DateTime.Now
-            }
+        var result = new UserDto()
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            MiddleName = user.MiddleName,
+            BirthDate = user.BirthDate,
+            FullName = user.FirstName + " " + user.LastName
         };
+
+        return new ValueTask<UserDto>(result);
+    }
+
+    public async Task AddAsync(UserDto model, CancellationToken cancellationToken)
+    {
+        var user = new Domain.Users.Entity.User()
+        {
+            Id = model.Id,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            MiddleName = model.MiddleName,
+            BirthDate = model.BirthDate        
+        };
+
+        await  _repository.AddAsync(user, cancellationToken);
+    }
+
+    public async Task UpdateAsync(UserDto model, CancellationToken cancellationToken)
+    {
+        var user = _repository.GetByIdAsync(model.Id).Result;
+        _repository.UpdateAsync(user, cancellationToken);
+    }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        await _repository.DeleteAsync(id, cancellationToken);
     }
 }

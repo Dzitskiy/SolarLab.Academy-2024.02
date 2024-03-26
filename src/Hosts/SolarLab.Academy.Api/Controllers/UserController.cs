@@ -20,7 +20,7 @@ public class UserController : ControllerBase
     /// </summary>
     public UserController(IUserService userService)
     {
-        _userService = userService; 
+        _userService = userService;
     }
 
     /// <summary>
@@ -37,7 +37,16 @@ public class UserController : ControllerBase
         // TODO временно отключил userService
         var result = await _userService.GetUsersAsync(cancellationToken);
 
-        return Ok(new UserDto());
+        return Ok(result);
+    }
+
+    [HttpGet("{id:Guid}")]
+    public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
+    {
+        // TODO временно отключил userService
+        var result = await _userService.GetByIdAsync(id);
+
+        return Ok(result);
     }
 
     /// <summary>
@@ -51,8 +60,40 @@ public class UserController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> CreateUser(CreateUserRequest request, CancellationToken cancellationToken)
     {
-        // TODO временно отключил userService
-        // var result = await _userService.CreateUsersAsync(request, cancellationToken);
-        return Created(new Uri($"{Request.Path}/1", UriKind.Relative), new UserDto());
+        var dto = new UserDto
+        {
+            FirstName = request.FirstName,
+            MiddleName = request.MiddleName,
+            LastName = request.LastName,
+            BirthDate = request.BirthDate ?? DateTime.UtcNow,
+            FullName = request.FirstName + " " + request.LastName
+        };
+
+        var result = await _userService.AddAsync(dto, cancellationToken);
+
+        return CreatedAtAction(nameof(CreateUser), new { result });
+    }
+
+    [HttpPut("{id:Guid}")]
+    public async Task<IActionResult> UpdateUser(CreateUserRequest request, CancellationToken cancellationToken)
+    {
+        var dto = new UserDto
+        {
+            FirstName = request.FirstName,
+            MiddleName = request.MiddleName,
+            LastName = request.LastName,
+            BirthDate = request.BirthDate ?? DateTime.UtcNow,
+            FullName = request.FirstName + " " + request.LastName
+        };
+
+        return await Task.Run(() => Ok(new UserDto()), cancellationToken);
+    }
+
+    [HttpDelete("{id:Guid}")]
+    public async Task<IActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
+    {
+        await _userService.DeleteAsync(id, cancellationToken);
+
+        return Ok();
     }
 }

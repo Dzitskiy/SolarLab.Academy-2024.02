@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
 namespace SolarLab.Academy.Infrastructure.Repository;
@@ -15,7 +16,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
         DbSet = DbContext.Set<TEntity>();
     }
     
-    public IQueryable<TEntity> GetAll()
+    public  IQueryable<TEntity> GetAll()
     {
         return DbSet.AsNoTracking();
     }
@@ -32,21 +33,40 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
 
     public ValueTask<TEntity?> GetByIdAsync(Guid id)
     {
-        return DbSet.FindAsync(id);
+        return  DbSet.FindAsync(id);
     }
 
-    public Task AddAsync(TEntity model)
+    public async Task AddAsync(TEntity model, CancellationToken cancelationToken)
     {
-        throw new NotImplementedException();
+        if (model == null)
+        { 
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        await DbSet.AddAsync(model, cancelationToken);
+        await DbContext.SaveChangesAsync(cancelationToken);
     }
 
-    public Task UpdateAsync(TEntity model)
+    public async Task UpdateAsync(TEntity model, CancellationToken cancelationToken)
     {
-        throw new NotImplementedException();
+        if (model == null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        DbSet.Update(model);
+        await DbContext.SaveChangesAsync(cancelationToken);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken cancelationToken)
     {
-        throw new NotImplementedException();
+        var entity = GetByIdAsync(id).Result;
+        if (entity == null)
+        {
+            throw new ArgumentNullException(nameof(entity));
+        }
+
+        DbSet.Remove(entity);
+        await DbContext.SaveChangesAsync(cancelationToken);
     }
 }

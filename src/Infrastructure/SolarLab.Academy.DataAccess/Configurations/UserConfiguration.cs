@@ -19,17 +19,17 @@ namespace SolarLab.Academy.DataAccess.Configurations
             builder
                 .Property(x => x.FirstName)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(255);
 
             builder
                 .Property(x => x.MiddleName)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(255);
 
             builder
                 .Property(x => x.LastName)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(255);
 
             builder
                 .Property(x => x.BirthDate)
