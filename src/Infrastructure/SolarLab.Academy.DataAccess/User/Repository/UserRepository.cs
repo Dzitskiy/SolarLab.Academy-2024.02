@@ -18,10 +18,12 @@ public class UserRepository : IUserRepository
     /// <inheritdoc />
     public async Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellationToken)
     {
+        var users = _repository.GetAll();
+         
         //TODO: Use repository instead
-        var users = UserList();
-        
-        return await Task.Run(()=>users.Select(u => new UserDto
+        //var users = UserList();
+
+        return await Task.Run(() => users.Select(u => new UserDto
         {
             Id = u.Id,
             FirstName = u.FirstName,

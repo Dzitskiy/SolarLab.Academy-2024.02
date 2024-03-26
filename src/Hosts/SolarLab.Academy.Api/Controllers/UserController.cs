@@ -13,11 +13,14 @@ namespace SolarLab.Academy.Api.Controllers;
 [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
 public class UserController : ControllerBase
 {
+    private readonly IUserService _userService;
+
     /// <summary>
     /// Инициализирует экземпляр <see cref="UserController"/>
     /// </summary>
-    public UserController()
+    public UserController(IUserService userService)
     {
+        _userService = userService; 
     }
 
     /// <summary>
@@ -32,7 +35,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken)
     {
         // TODO временно отключил userService
-        //var result = await _userService.GetUsersAsync(cancellationToken);
+        var result = await _userService.GetUsersAsync(cancellationToken);
 
         return Ok(new UserDto());
     }
