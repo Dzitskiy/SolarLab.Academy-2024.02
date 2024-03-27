@@ -6,6 +6,7 @@ using SolarLab.Academy.Api.Controllers;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.AppServices.Users.Services;
 using SolarLab.Academy.AppServices.Validators;
+using SolarLab.Academy.ComponentRegistrar;
 using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.DataAccess;
 using SolarLab.Academy.DataAccess.User.Repository;
@@ -27,6 +28,7 @@ builder.Services.AddSwaggerGen(options =>
         $"{typeof(UserDto).Assembly.GetName().Name}.xml")));
 });
 
+builder.Services.AddServices();
 builder.Services.AddTransient<IUserService, UserService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();

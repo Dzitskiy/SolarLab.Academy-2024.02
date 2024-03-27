@@ -1,4 +1,5 @@
 ﻿using SolarLab.Academy.Contracts.Users;
+using SolarLab.Academy.Domain.Users.Entity;
 
 namespace SolarLab.Academy.AppServices.Users.Repositories;
 
@@ -9,9 +10,9 @@ public interface IUserRepository
 {
     Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellationToken);
 
-    ValueTask<UserDto> GetByIdAsync(Guid id);
+    Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
-    Task AddAsync(UserDto model, CancellationToken cancellationToken);
+    Task AddAsync(User entity, CancellationToken cancellationToken);
 
     Task UpdateAsync(UserDto model, CancellationToken cancellationToken);
 
