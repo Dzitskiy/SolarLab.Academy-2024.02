@@ -1,6 +1,9 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.Contracts.Users;
+using SolarLab.Academy.Domain.Users.Entity;
+using System.Threading;
 
 namespace SolarLab.Academy.AppServices.Users.Services;
 
@@ -8,14 +11,16 @@ namespace SolarLab.Academy.AppServices.Users.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="UserService"/>.
     /// </summary>
     /// <param name="userRepository">Репозиторий для работы с пользователями.</param>
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     /// <inheritdoc />
@@ -23,18 +28,16 @@ public class UserService : IUserService
     {
         return _userRepository.GetAll(cancellationToken);
     }
-    public async ValueTask<UserDto> GetByIdAsync(Guid id)
+    public async ValueTask<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _userRepository.GetByIdAsync(id);
+        return await _userRepository.GetByIdAsync(id, cancellationToken);
     }
 
-    public async Task<Guid> AddAsync(UserDto model, CancellationToken cancellationToken)
+    public async Task<Guid> AddAsync(CreateUserRequest model, CancellationToken cancellationToken)
     {
-        model.Id = Guid.NewGuid();
-
-        await _userRepository.AddAsync(model, cancellationToken);
-
-        return model.Id;
+        var entity = _mapper.Map<User>(model);
+        await _userRepository.AddAsync(entity, cancellationToken);
+        return entity.Id;
     }
 
     public async Task UpdateAsync(UserDto model, CancellationToken cancellationToken)

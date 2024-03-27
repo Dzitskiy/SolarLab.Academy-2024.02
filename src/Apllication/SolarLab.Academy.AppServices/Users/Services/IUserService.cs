@@ -13,9 +13,9 @@ public interface IUserService
     /// <returns>Список пользователей <see cref="UserDto"/>.</returns>
     Task<IEnumerable<UserDto>> GetUsersAsync(CancellationToken cancellationToken);
 
-    ValueTask<UserDto> GetByIdAsync(Guid id);
+    ValueTask<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
-    Task<Guid> AddAsync(UserDto model, CancellationToken cancellationToken);
+    Task<Guid> AddAsync(CreateUserRequest model, CancellationToken cancellationToken);
 
     Task UpdateAsync(UserDto model, CancellationToken cancellationToken);
 

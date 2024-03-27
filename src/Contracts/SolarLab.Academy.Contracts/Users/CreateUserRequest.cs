@@ -8,7 +8,7 @@ public class CreateUserRequest
     /// <summary>
     /// Имя.
     /// </summary>
-    public string FirstName { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Фамилия.

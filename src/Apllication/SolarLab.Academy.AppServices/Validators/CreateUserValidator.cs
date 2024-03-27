@@ -12,7 +12,7 @@ public class CreateUserValidator : AbstractValidator<CreateUserRequest>
     {
         // ФИО по длинне д.б. в установленных пределах по длине
         // NOTE ДЗ: 3 последних валидатора для ФИО одинаковые по смыслу - желательно оптимизировать
-        RuleFor(x => x.FirstName).Length(1, 50).Matches(@"^[\p{L}]+$");
+        RuleFor(x => x.Name).Length(1, 50).Matches(@"^[\p{L}]+$");
         RuleFor(x => x.LastName).Length(1, 50).Must(s => s.All(char.IsLetter));
         RuleFor(x => x.MiddleName).Length(1, 50).Must(s => !s.Any(c => !char.IsLetter(c)));
 

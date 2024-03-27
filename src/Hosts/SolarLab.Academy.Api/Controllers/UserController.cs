@@ -34,18 +34,14 @@ public class UserController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken)
     {
-        // TODO временно отключил userService
         var result = await _userService.GetUsersAsync(cancellationToken);
-
         return Ok(result);
     }
 
     [HttpGet("{id:Guid}")]
     public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
     {
-        // TODO временно отключил userService
-        var result = await _userService.GetByIdAsync(id);
-
+        var result = await _userService.GetByIdAsync(id, cancellationToken);
         return Ok(result);
     }
 
@@ -60,17 +56,7 @@ public class UserController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> CreateUser(CreateUserRequest request, CancellationToken cancellationToken)
     {
-        var dto = new UserDto
-        {
-            FirstName = request.FirstName,
-            MiddleName = request.MiddleName,
-            LastName = request.LastName,
-            BirthDate = request.BirthDate ?? DateTime.UtcNow,
-            FullName = request.FirstName + " " + request.LastName
-        };
-
-        var result = await _userService.AddAsync(dto, cancellationToken);
-
+        var result = await _userService.AddAsync(request, cancellationToken);
         return CreatedAtAction(nameof(CreateUser), new { result });
     }
 
@@ -79,11 +65,11 @@ public class UserController : ControllerBase
     {
         var dto = new UserDto
         {
-            FirstName = request.FirstName,
+            FirstName = request.Name,
             MiddleName = request.MiddleName,
             LastName = request.LastName,
             BirthDate = request.BirthDate ?? DateTime.UtcNow,
-            FullName = request.FirstName + " " + request.LastName
+            FullName = request.Name + " " + request.LastName
         };
 
         return await Task.Run(() => Ok(new UserDto()), cancellationToken);
