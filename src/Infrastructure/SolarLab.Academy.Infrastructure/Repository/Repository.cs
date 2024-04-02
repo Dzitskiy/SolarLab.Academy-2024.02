@@ -60,7 +60,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
 
     public async Task DeleteAsync(Guid id, CancellationToken cancelationToken)
     {
-        var entity = GetByIdAsync(id).Result;
+        var entity = await GetByIdAsync(id);
         if (entity == null)
         {
             throw new ArgumentNullException(nameof(entity));

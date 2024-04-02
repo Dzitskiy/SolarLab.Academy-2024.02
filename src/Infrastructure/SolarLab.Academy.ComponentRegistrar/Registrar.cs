@@ -26,6 +26,7 @@ namespace SolarLab.Academy.ComponentRegistrar
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<UserProfile>();
+                cfg.AddProfile<FileProfile>();
             });
             config.AssertConfigurationIsValid();
             return config;
