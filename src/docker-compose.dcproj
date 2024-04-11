@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>3863cb77-fa6a-4e5a-9e8a-5c707354791a</ProjectGuid>
+    <ProjectGuid>5ff6cccd-86c6-4b8c-bf57-800ebbf4f02d</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>solarlab.academy.api</DockerServiceName>

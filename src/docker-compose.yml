@@ -1,14 +1,13 @@
 version: '3.7'
 
 services:
-
-  api:
+  solarlab.academy.api:
     container_name: solarlab-academy-api
     build:
       context: .
-      dockerfile: Host/SolarLab.Academy.Api/Dockerfile
+      dockerfile: ./Hosts/SolarLab.Academy.Api/Dockerfile
     ports:
-      - 5000:80
+      - 5000:8080
     environment:
       - ConnectionStrings__PostgresBoardDb=Server=postgres;Database=Academy;Username=postgres;Password=password;Port=5432
 
@@ -16,7 +15,7 @@ services:
   #  container_name: solarlab-academy-migrator
   #  build:
   #    context: .
-  #    dockerfile: src/Board/Host/Board.Host.DbMigrator/Dockerfile
+  #    dockerfile: ./SolarLab.Academy.DbMigrator/Dockerfile
   #  environment:
   #    - ConnectionStrings__PostgresBoardDb=Server=postgres;Database=Board;Username=postgres;Password=postgres;Port=5432
   #  networks:
