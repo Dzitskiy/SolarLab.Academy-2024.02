@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  solarlab.academy.api:
+    image: ${DOCKER_REGISTRY-}solarlabacademyapi
+    build:
+      context: .
+      dockerfile: Hosts/SolarLab.Academy.Api/Dockerfile
