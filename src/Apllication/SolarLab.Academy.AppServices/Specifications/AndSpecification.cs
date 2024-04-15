@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("SolarLab.Academy.UnitTests")]
 namespace SolarLab.Academy.AppServices.Specifications;
 
 internal sealed class AndSpecification<T> : Specification<T>
