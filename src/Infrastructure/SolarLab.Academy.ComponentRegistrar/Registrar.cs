@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using SolarLab.Academy.ComponentRegistrar.Mappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarLab.Academy.ComponentRegistrar
 {
