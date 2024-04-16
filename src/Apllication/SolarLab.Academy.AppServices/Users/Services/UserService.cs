@@ -4,6 +4,7 @@ using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.Domain.Users.Entity;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 using SolarLab.Academy.AppServices.Specifications;
 using SolarLab.Academy.AppServices.Users.Specifications;
 
@@ -14,15 +15,17 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger<UserService> _logger;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="UserService"/>.
     /// </summary>
     /// <param name="userRepository">Репозиторий для работы с пользователями.</param>
-    public UserService(IUserRepository userRepository, IMapper mapper)
+    public UserService(IUserRepository userRepository, IMapper mapper, ILogger<UserService> logger)
     {
         _userRepository = userRepository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <inheritdoc />
@@ -39,6 +42,8 @@ public class UserService : IUserService
         {
             specification = specification.And(new Older18specification());
         }
+        
+        _logger.LogInformation("Отправка запроса на получение пользователей по имени");
         
         return _userRepository.GetAllBySpecification(specification, cancellationToken);
     }

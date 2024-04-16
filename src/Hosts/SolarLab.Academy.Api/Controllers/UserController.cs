@@ -14,13 +14,15 @@ namespace SolarLab.Academy.Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly ILogger<UserController> _logger;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="UserController"/>
     /// </summary>
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, ILogger<UserController> logger)
     {
         _userService = userService;
+        _logger = logger;
     }
 
     /// <summary>
@@ -50,8 +52,13 @@ public class UserController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IActionResult> GetAllByName([FromQuery]UsersByNameRequest request, CancellationToken cancellationToken)
     {
-        var result = await _userService.GetUsersByNameAsync(request, cancellationToken);
-        return Ok(result);
+        using (_logger.BeginScope("бизнес операция поиска пользователей по имени: {Name}; IsOlder18: {IsOlder18}", request.Name, request.IsOlder18))
+        {
+            _logger.LogInformation("Запрос на получение пользователей по имени");
+            var result = await _userService.GetUsersByNameAsync(request, cancellationToken);
+            _logger.LogInformation("Запрос на получение пользователей по имени завершён успешно");
+            return Ok(result);
+        }
     }
 
     [HttpGet("{id:Guid}")]

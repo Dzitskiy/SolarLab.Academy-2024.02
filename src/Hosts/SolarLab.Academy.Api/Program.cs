@@ -2,6 +2,8 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Events;
 using SolarLab.Academy.Api.Controllers;
 using SolarLab.Academy.AppServices.Files.Repositories;
 using SolarLab.Academy.AppServices.Files.Services;
@@ -46,6 +48,14 @@ builder.Services.AddScoped<DbContext>(s => s.GetRequiredService<ApplicationDbCon
 
 builder.Services.AddFluentValidationAutoValidation(o => o.DisableDataAnnotationsValidation = true);
 builder.Services.AddValidatorsFromAssembly(typeof(CreateUserValidator).Assembly);
+
+builder.Services.AddSerilog((services, config) =>
+{
+    config.ReadFrom.Configuration(builder.Configuration)
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .WriteTo.Console()
+        .WriteTo.Debug();
+});
 
 
 var app = builder.Build();
