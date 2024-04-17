@@ -52,6 +52,13 @@ builder.Services.AddScoped<DbContext>(s => s.GetRequiredService<ApplicationDbCon
 builder.Services.AddFluentValidationAutoValidation(o => o.DisableDataAnnotationsValidation = true);
 builder.Services.AddValidatorsFromAssembly(typeof(CreateUserValidator).Assembly);
 
+builder.Services.AddMemoryCache();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "local";
+});
 
 var app = builder.Build();
 

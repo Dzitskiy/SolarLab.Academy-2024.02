@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.Domain.Users.Entity;
-using System.Threading;
 using SolarLab.Academy.AppServices.Specifications;
 using SolarLab.Academy.AppServices.Users.Specifications;
 

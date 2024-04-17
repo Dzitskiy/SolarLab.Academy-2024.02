@@ -1,12 +1,6 @@
 ﻿using AutoMapper;
 using SolarLab.Academy.AppServices.Files.Repositories;
 using SolarLab.Academy.Contracts.Files;
-using SolarLab.Academy.Domain.Files.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using File = SolarLab.Academy.Domain.Files.Entity.File;
 
 namespace SolarLab.Academy.AppServices.Files.Services
