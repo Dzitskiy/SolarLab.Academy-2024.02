@@ -3,6 +3,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SolarLab.Academy.Api.Controllers;
+using SolarLab.Academy.AppServices.Categories.Repositories;
+using SolarLab.Academy.AppServices.Categories.Services;
 using SolarLab.Academy.AppServices.Files.Repositories;
 using SolarLab.Academy.AppServices.Files.Services;
 using SolarLab.Academy.AppServices.Users.Repositories;
@@ -11,6 +13,7 @@ using SolarLab.Academy.AppServices.Validators;
 using SolarLab.Academy.ComponentRegistrar;
 using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.DataAccess;
+using SolarLab.Academy.DataAccess.Categories.Repository;
 using SolarLab.Academy.DataAccess.Files.Repository;
 using SolarLab.Academy.DataAccess.User.Repository;
 using SolarLab.Academy.Infrastructure.Repository;
@@ -34,9 +37,11 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddServices();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IFileService, FileService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IFileRepository, FileRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
