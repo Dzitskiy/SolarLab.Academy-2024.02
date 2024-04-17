@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
 using SolarLab.Academy.AppServices.Files.Repositories;
 using SolarLab.Academy.Contracts.Files;
-using SolarLab.Academy.Domain.Files.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using File = SolarLab.Academy.Domain.Files.Entity.File;
 
 namespace SolarLab.Academy.AppServices.Files.Services
@@ -14,13 +9,17 @@ namespace SolarLab.Academy.AppServices.Files.Services
     /// <inheritdoc cref="IFileService"/>
     public class FileService : IFileService
     {
+        // кеш в памяти приложения
+        private readonly IMemoryCache _memoryCache;
+
         private readonly IFileRepository _fileRepository;
         private readonly IMapper _mapper;
 
-        public FileService(IFileRepository fileRepository, IMapper mapper)
+        public FileService(IFileRepository fileRepository, IMapper mapper, IMemoryCache memoryCache)
         {
             _fileRepository = fileRepository;
             _mapper = mapper;
+            _memoryCache = memoryCache;
         }
 
         /// <inheritdoc/>
@@ -36,9 +35,21 @@ namespace SolarLab.Academy.AppServices.Files.Services
         }
 
         /// <inheritdoc/>
-        public Task<FileInfoDto> GetInfoByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<FileInfoDto> GetInfoByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return _fileRepository.GetInfoByIdAsync(id, cancellationToken);
+            if (_memoryCache.TryGetValue(id, out var res))
+            {
+                return (FileInfoDto)res;
+            }
+
+            var info = await _fileRepository.GetInfoByIdAsync(id, cancellationToken);
+
+            _memoryCache.Set(id, info, new MemoryCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromMinutes(5)
+                });
+
+            return info;
         }
 
         /// <inheritdoc/>
