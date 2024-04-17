@@ -2,10 +2,8 @@
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.Domain.Users.Entity;
-using Microsoft.Extensions.Caching.Distributed;
 using SolarLab.Academy.AppServices.Specifications;
 using SolarLab.Academy.AppServices.Users.Specifications;
-using System.Text.Json;
 
 namespace SolarLab.Academy.AppServices.Users.Services;
 
@@ -13,48 +11,22 @@ namespace SolarLab.Academy.AppServices.Users.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-
-    // распределённый кеш
-    private readonly IDistributedCache _cache;
-
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="UserService"/>.
     /// </summary>
     /// <param name="userRepository">Репозиторий для работы с пользователями.</param>
-    public UserService(IUserRepository userRepository, IMapper mapper, IDistributedCache cache)
+    public UserService(IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
         _mapper = mapper;
-        _cache = cache;
     }
 
     /// <inheritdoc />
-    public async Task<ResultWithPagination<UserDto>> GetUsersAsync(GetAllUsersRequest request, CancellationToken cancellationToken)
+    public Task<ResultWithPagination<UserDto>> GetUsersAsync(GetAllUsersRequest request, CancellationToken cancellationToken)
     {
-        var key = $"users_{request.PageNumber}_{request.Batchsize}";
-
-        var usersString = await _cache.GetStringAsync(key, cancellationToken);
-
-        ResultWithPagination<UserDto> users;
-        if (!string.IsNullOrWhiteSpace(usersString))
-        {
-            users = JsonSerializer.Deserialize<ResultWithPagination<UserDto>>(usersString);
-            return users;
-        }
-
-        users = await _userRepository.GetAll(request, cancellationToken);
-
-        usersString = JsonSerializer.Serialize(users);
-        await _cache.SetStringAsync(key, usersString,
-            new DistributedCacheEntryOptions
-            {
-                SlidingExpiration = TimeSpan.FromMinutes(10)
-            },
-            cancellationToken);
-
-        return users;
+        return _userRepository.GetAll(request, cancellationToken);
     }
 
     public Task<IEnumerable<UserDto>> GetUsersByNameAsync(UsersByNameRequest request, CancellationToken cancellationToken)
