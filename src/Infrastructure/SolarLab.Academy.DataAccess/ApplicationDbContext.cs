@@ -7,12 +7,15 @@ namespace SolarLab.Academy.DataAccess
     {
         public DbSet<Domain.Users.Entity.User> Users {get; set;}
 
-        public ApplicationDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
+        public ApplicationDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new FileConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         }
     }
 }

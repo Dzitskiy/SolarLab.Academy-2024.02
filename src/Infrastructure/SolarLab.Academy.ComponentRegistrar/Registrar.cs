@@ -22,6 +22,7 @@ namespace SolarLab.Academy.ComponentRegistrar
             {
                 cfg.AddProfile<UserProfile>();
                 cfg.AddProfile<FileProfile>();
+                cfg.AddProfile<CategoryProfile>();
             });
             config.AssertConfigurationIsValid();
             return config;
