@@ -39,7 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\SolarLab.Academy.DataAccess\SolarLab.Academy.DataAccess.csproj" />
+    <ProjectReference Include="..\..\Domain\SolarLab.Academy.Domain\SolarLab.Academy.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\SolarLab.Academy.DataAccess\SolarLab.Academy.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
