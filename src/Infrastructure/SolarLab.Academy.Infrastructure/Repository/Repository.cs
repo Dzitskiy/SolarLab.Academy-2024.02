@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
 namespace SolarLab.Academy.Infrastructure.Repository;
@@ -16,7 +15,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
         DbSet = DbContext.Set<TEntity>();
     }
     
-    public  IQueryable<TEntity> GetAll()
+    public IQueryable<TEntity> GetAll()
     {
         return DbSet.AsNoTracking();
     }
@@ -33,21 +32,21 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
 
     public ValueTask<TEntity?> GetByIdAsync(Guid id)
     {
-        return  DbSet.FindAsync(id);
+        return DbSet.FindAsync(id);
     }
 
-    public async Task AddAsync(TEntity model, CancellationToken cancelationToken)
+    public async Task AddAsync(TEntity model, CancellationToken cancellationToken)
     {
         if (model == null)
         { 
             throw new ArgumentNullException(nameof(model));
         }
 
-        await DbSet.AddAsync(model, cancelationToken);
-        await DbContext.SaveChangesAsync(cancelationToken);
+        await DbSet.AddAsync(model, cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(TEntity model, CancellationToken cancelationToken)
+    public async Task UpdateAsync(TEntity model, CancellationToken cancellationToken)
     {
         if (model == null)
         {
@@ -55,10 +54,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
         }
 
         DbSet.Update(model);
-        await DbContext.SaveChangesAsync(cancelationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken cancelationToken)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await GetByIdAsync(id);
         if (entity == null)
@@ -67,6 +66,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
         }
 
         DbSet.Remove(entity);
-        await DbContext.SaveChangesAsync(cancelationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
     }
 }
