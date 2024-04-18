@@ -1,15 +1,16 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using SolarLab.Academy.AppServices.Base;
 
-namespace SolarLab.Academy.Infrastructure.Repository;
+namespace SolarLab.Academy.DataAccess.Base;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
+public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity: class
 {
     protected DbContext DbContext { get; }
     
     protected DbSet<TEntity> DbSet { get; }
 
-    public Repository(DbContext context)
+    protected BaseRepository(DbContext context)
     {
         DbContext = context;
         DbSet = DbContext.Set<TEntity>();

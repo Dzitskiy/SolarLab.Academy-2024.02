@@ -2,6 +2,7 @@
 using System.Net;
 using SolarLab.Academy.AppServices.Categories.Services;
 using SolarLab.Academy.Domain.Categories.Entity;
+using SolarLab.Academy.Contracts.Categories;
 
 namespace SolarLab.Academy.Api.Controllers
 {
@@ -10,14 +11,9 @@ namespace SolarLab.Academy.Api.Controllers
     /// </summary>
     [Route("[controller]")]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController(ICategoryService categoryService) : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
-
-        public CategoriesController(ICategoryService categoryService)
-        {
-            _categoryService = categoryService;
-        }
+        private readonly ICategoryService _categoryService = categoryService;
 
         /// <summary>
         /// Получить список всех категорий.
@@ -25,12 +21,9 @@ namespace SolarLab.Academy.Api.Controllers
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Список категорий.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Category>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
-        {
-            var result = await _categoryService.GetAll(cancellationToken);
-            return Ok(result);
-        }
+        [ProducesResponseType(typeof(IReadOnlyCollection<CategoryDto>), (int)HttpStatusCode.OK)]
+        public async Task<IReadOnlyCollection<CategoryDto>> GetAll(CancellationToken cancellationToken) =>
+            await _categoryService.GetAll(cancellationToken);
 
         /// <summary>
         /// Получить информацию о категории.

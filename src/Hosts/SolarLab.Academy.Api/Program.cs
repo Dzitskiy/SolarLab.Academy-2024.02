@@ -16,7 +16,6 @@ using SolarLab.Academy.DataAccess;
 using SolarLab.Academy.DataAccess.Categories.Repository;
 using SolarLab.Academy.DataAccess.Files.Repository;
 using SolarLab.Academy.DataAccess.User.Repository;
-using SolarLab.Academy.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,8 +41,6 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection")));
 
