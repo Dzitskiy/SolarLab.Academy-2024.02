@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 
-namespace SolarLab.Academy.Infrastructure.Repository;
+namespace SolarLab.Academy.AppServices.Base;
 
-public interface IRepository<TEntity> where TEntity: class
+public interface IBaseRepository<TEntity> where TEntity: class
 {
     /// <summary>
     /// Возвращает все элементы сущности <see cref="TEntity"/>

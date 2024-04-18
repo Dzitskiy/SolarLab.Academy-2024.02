@@ -11,17 +11,9 @@ namespace SolarLab.Academy.Api.Controllers;
 [ApiController]
 [Route("[controller]")]
 [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-public class UserController : ControllerBase
+public class UserController(IUserService userService) : ControllerBase
 {
-    private readonly IUserService _userService;
-
-    /// <summary>
-    /// Инициализирует экземпляр <see cref="UserController"/>
-    /// </summary>
-    public UserController(IUserService userService)
-    {
-        _userService = userService;
-    }
+    private readonly IUserService _userService = userService;
 
     /// <summary>
     /// Возвращает список пользователей.
@@ -55,11 +47,8 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id:Guid}")]
-    public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
-    {
-        var result = await _userService.GetByIdAsync(id, cancellationToken);
-        return Ok(result);
-    }
+    public async Task<UserDto> GetUserById(Guid id, CancellationToken cancellationToken) =>
+        await _userService.GetByIdAsync(id, cancellationToken);
 
     /// <summary>
     /// Создать пользователя.

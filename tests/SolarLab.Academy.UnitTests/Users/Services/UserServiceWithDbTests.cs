@@ -9,7 +9,6 @@ using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.DataAccess;
 using SolarLab.Academy.DataAccess.User.Repository;
 using SolarLab.Academy.Domain.Users.Entity;
-using SolarLab.Academy.Infrastructure.Repository;
 
 namespace SolarLab.Academy.UnitTests.Users.Services;
 
@@ -25,7 +24,6 @@ public class UserServiceWithDbTests : IDisposable
 
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    private readonly IRepository<User> _repository;
     private readonly ApplicationDbContext _context;
     private readonly SqliteConnection _connection;
 
@@ -45,8 +43,7 @@ public class UserServiceWithDbTests : IDisposable
         _context.SaveChanges();
 
         _mapper = new MapperConfiguration(configure => configure.AddProfile(new UserProfile())).CreateMapper();
-        _repository = new Repository<User>(_context);
-        _userRepository = new UserRepository(_repository, _mapper);
+        _userRepository = new UserRepository(_mapper, _context);
         _userService = new UserService(_userRepository, _mapper);
     }
 

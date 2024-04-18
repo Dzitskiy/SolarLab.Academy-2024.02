@@ -1,4 +1,5 @@
-﻿using SolarLab.Academy.AppServices.Specifications;
+﻿using SolarLab.Academy.AppServices.Base;
+using SolarLab.Academy.AppServices.Specifications;
 using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.Domain.Users.Entity;
 
@@ -7,7 +8,7 @@ namespace SolarLab.Academy.AppServices.Users.Repositories;
 /// <summary>
 /// Репозиторий для работы с пользователями.
 /// </summary>
-public interface IUserRepository
+public interface IUserRepository : IBaseRepository<User>
 {
     Task<ResultWithPagination<UserDto>> GetAll(GetAllUsersRequest request, CancellationToken cancellationToken);
     
@@ -15,9 +16,5 @@ public interface IUserRepository
 
     Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
-    Task AddAsync(User entity, CancellationToken cancellationToken);
-
     Task UpdateAsync(UserDto model, CancellationToken cancellationToken);
-
-    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

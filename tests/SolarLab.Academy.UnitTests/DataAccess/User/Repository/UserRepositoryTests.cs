@@ -1,11 +1,11 @@
 ﻿using AutoFixture;
 using AutoMapper;
-using MockQueryable.Moq;
-using Moq;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.ComponentRegistrar.Mappers;
+using SolarLab.Academy.DataAccess;
 using SolarLab.Academy.DataAccess.User.Repository;
-using SolarLab.Academy.Infrastructure.Repository;
 
 namespace SolarLab.Academy.UnitTests.DataAccess.User.Repository;
 
@@ -15,47 +15,71 @@ namespace SolarLab.Academy.UnitTests.DataAccess.User.Repository;
 public class UserRepositoryTests
 {
     private readonly IMapper _mapper;
-    private readonly Mock<IRepository<Domain.Users.Entity.User>> _baseUserRepository;
 
-    private readonly IUserRepository _userRepository;
+    private IUserRepository _userRepository;
 
     public UserRepositoryTests()
     {
         _mapper = new MapperConfiguration(configure => configure.AddProfile(new UserProfile())).CreateMapper();
-        _baseUserRepository = new Mock<IRepository<Domain.Users.Entity.User>>();
-        _userRepository = new UserRepository(_baseUserRepository.Object, _mapper);
     }
 
-    /// <summary>
-    /// Проверка <see cref="UserProfile"/>.
-    /// </summary>
+
     [Fact]
-    public async Task GetByIdAsync_Should_Return_UserAsync()
+    public async Task Repository_GetAll_Returns_Empty_SqLiteAsync()
     {
         // Arrange
-        var fixture = new Fixture();
-        var userId = fixture.Create<Guid>();
-        var token = new CancellationTokenSource().Token;
-        var userModel = fixture
-            .Build<Domain.Users.Entity.User>()
-            .With(x => x.Id, userId)
-            .Create();
+        var connection = new SqliteConnection("Filename=:memory:");
+        connection.Open();
+        var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlite(connection)
+            .Options;
+        using var context = new ApplicationDbContext(contextOptions);
 
-        var userList = new List<Domain.Users.Entity.User>
-        {
-            userModel
-        };
-        var mockList = userList.AsQueryable().BuildMock();
-        _baseUserRepository
-            .Setup(x => x.GetAll())
-            .Returns(mockList);
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+        context.SaveChanges();
+        _userRepository = new UserRepository(_mapper, context);
 
         // Act
-        var userDto = await _userRepository.GetByIdAsync(userId, token);
+        var allUsers = await _userRepository.GetAll().ToArrayAsync();
 
-        // Assert
-        Assert.NotNull(userDto);
-        Assert.Equal(userId, userDto.Id);
-        Assert.Equal(userModel.FirstName, userDto.FirstName);
+        // Assert.
+        Assert.NotNull(allUsers);
+        Assert.Empty(allUsers);
     }
+
+    [Fact]
+    public async Task Repository_GetAll_Returns_Users_SqliteAsync()
+    {
+        // Arrange
+        var connection = new SqliteConnection("Filename=:memory:");
+        connection.Open();
+        var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlite(connection)
+            .Options;
+        using var context = new ApplicationDbContext(contextOptions);
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+        context.AddRange(GenerateRandomUser(), GenerateRandomUser());
+        context.SaveChanges();
+        _userRepository = new UserRepository(_mapper, context);
+
+        // Act
+        var allUsers = await _userRepository.GetAll().ToArrayAsync();
+
+        // Assert.
+        Assert.NotNull(allUsers);
+        Assert.NotEmpty(allUsers);
+        Assert.Equal(2, allUsers.Length);
+    }
+
+    private static Domain.Users.Entity.User GenerateRandomUser() =>
+        new Domain.Users.Entity.User
+        {
+            Id = Guid.NewGuid(),
+            CreatedAt = DateTime.UtcNow,
+            FirstName = Guid.NewGuid().ToString(),
+            LastName = Guid.NewGuid().ToString(),
+            MiddleName = Guid.NewGuid().ToString(),
+        };
 }

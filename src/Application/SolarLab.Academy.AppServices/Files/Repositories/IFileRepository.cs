@@ -1,5 +1,5 @@
-﻿using SolarLab.Academy.Contracts.Files;
-using SolarLab.Academy.Domain.Files.Entity;
+﻿using SolarLab.Academy.AppServices.Base;
+using SolarLab.Academy.Contracts.Files;
 using File = SolarLab.Academy.Domain.Files.Entity.File;
 
 namespace SolarLab.Academy.AppServices.Files.Repositories
@@ -7,7 +7,7 @@ namespace SolarLab.Academy.AppServices.Files.Repositories
     /// <summary>
     /// Репозиторий для работы с файлами.
     /// </summary>
-    public interface IFileRepository
+    public interface IFileRepository : IBaseRepository<File>
     {
         /// <summary>
         /// Получение информации о файле по его идентификатору.
