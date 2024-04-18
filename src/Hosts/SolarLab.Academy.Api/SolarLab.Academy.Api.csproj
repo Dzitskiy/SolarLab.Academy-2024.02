@@ -26,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Apllication\SolarLab.Academy.AppServices\SolarLab.Academy.AppServices.csproj" />
+      <ProjectReference Include="..\..\Application\SolarLab.Academy.AppServices\SolarLab.Academy.AppServices.csproj" />
       <ProjectReference Include="..\..\Infrastructure\SolarLab.Academy.ComponentRegistrar\SolarLab.Academy.ComponentRegistrar.csproj" />
       <ProjectReference Include="..\..\Infrastructure\SolarLab.Academy.DataAccess\SolarLab.Academy.DataAccess.csproj" />
       <ProjectReference Include="..\..\Infrastructure\SolarLab.Academy.Infrastructure\SolarLab.Academy.Infrastructure.csproj" />

@@ -4,8 +4,10 @@ using SolarLab.Academy.DataAccess;
 using SolarLab.Academy.Domain.Users.Entity;
 namespace SolarLab.Academy.UnitTests.Infrastructure.Repository;
 
-public partial class RepositoryTests
+public class RepositoryTests
 {
+    private Academy.Infrastructure.Repository.Repository<User> _repository;
+
     [Fact]
     public async Task Repository_GetAll_Returns_Empty_SqLiteAsync()
     {
@@ -54,4 +56,14 @@ public partial class RepositoryTests
         Assert.NotEmpty(allUsers);
         Assert.Equal(2, allUsers.Length);
     }
+
+    private static User GenerateRandomUser() =>
+        new User
+        {
+            Id = Guid.NewGuid(),
+            CreatedAt = DateTime.UtcNow,
+            FirstName = Guid.NewGuid().ToString(),
+            LastName = Guid.NewGuid().ToString(),
+            MiddleName = Guid.NewGuid().ToString(),
+        };
 }
