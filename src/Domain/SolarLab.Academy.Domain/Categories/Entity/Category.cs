@@ -29,6 +29,6 @@
         /// <summary>
         /// Список подкатегорий.
         /// </summary>
-        public ICollection<Category> SubCategories { get; set; } = Array.Empty<Category>();
+        public ICollection<Category> SubCategories { get; set; }
     }
 }
