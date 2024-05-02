@@ -4,6 +4,7 @@ using SolarLab.Academy.Contracts.Users;
 using SolarLab.Academy.Domain.Users.Entity;
 using SolarLab.Academy.AppServices.Specifications;
 using SolarLab.Academy.AppServices.Users.Specifications;
+using SolarLab.Academy.AppServices.Notifications.Services;
 
 namespace SolarLab.Academy.AppServices.Users.Services;
 
@@ -11,16 +12,18 @@ namespace SolarLab.Academy.AppServices.Users.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly INotificationService _notificationService;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="UserService"/>.
     /// </summary>
     /// <param name="userRepository">Репозиторий для работы с пользователями.</param>
-    public UserService(IUserRepository userRepository, IMapper mapper)
+    public UserService(IUserRepository userRepository, IMapper mapper, INotificationService notificationService)
     {
         _userRepository = userRepository;
         _mapper = mapper;
+        _notificationService = notificationService;
     }
 
     /// <inheritdoc />
@@ -50,6 +53,8 @@ public class UserService : IUserService
     {
         var entity = _mapper.Map<User>(model);
         await _userRepository.AddAsync(entity, cancellationToken);
+
+        await _notificationService.SendUserWasCreatedAsync(entity.Id, cancellationToken);
         return entity.Id;
     }
 

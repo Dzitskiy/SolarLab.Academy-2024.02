@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using SolarLab.Academy.AppServices.Notifications.Services;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.AppServices.Users.Services;
 using SolarLab.Academy.ComponentRegistrar.Mappers;
@@ -23,6 +24,7 @@ public class UserServiceWithDbTests : IDisposable
     private bool disposedValue;
 
     private readonly IUserRepository _userRepository;
+    private readonly INotificationService _notificationService;
     private readonly IMapper _mapper;
     private readonly ApplicationDbContext _context;
     private readonly SqliteConnection _connection;
@@ -44,7 +46,8 @@ public class UserServiceWithDbTests : IDisposable
 
         _mapper = new MapperConfiguration(configure => configure.AddProfile(new UserProfile())).CreateMapper();
         _userRepository = new UserRepository(_mapper, _context);
-        _userService = new UserService(_userRepository, _mapper);
+        _notificationService = new NotificationService();
+        _userService = new UserService(_userRepository, _mapper, _notificationService);
     }
 
     /// <summary>

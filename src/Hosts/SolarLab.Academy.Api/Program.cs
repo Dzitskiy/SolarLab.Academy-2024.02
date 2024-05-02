@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SolarLab.Academy.Api.Controllers;
@@ -7,6 +8,7 @@ using SolarLab.Academy.AppServices.Categories.Repositories;
 using SolarLab.Academy.AppServices.Categories.Services;
 using SolarLab.Academy.AppServices.Files.Repositories;
 using SolarLab.Academy.AppServices.Files.Services;
+using SolarLab.Academy.AppServices.Notifications.Services;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.AppServices.Users.Services;
 using SolarLab.Academy.AppServices.Validators;
@@ -34,6 +36,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddServices();
+builder.Services.AddTransient<INotificationService, NotificationService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
@@ -56,6 +59,16 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     options.InstanceName = "local";
 });
+
+builder.Services.AddMassTransit(bus =>
+{
+    bus.UsingRabbitMq((ctx, configurator) =>
+    {
+        configurator.Host(builder.Configuration.GetConnectionString("RabbitMq"));
+    });
+});
+builder.Services.AddMassTransitHostedService();
+
 
 var app = builder.Build();
 

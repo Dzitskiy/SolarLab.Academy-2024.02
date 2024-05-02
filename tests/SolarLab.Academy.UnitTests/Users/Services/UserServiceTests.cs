@@ -2,6 +2,7 @@
 using AutoMapper;
 using FluentAssertions;
 using Moq;
+using SolarLab.Academy.AppServices.Notifications.Services;
 using SolarLab.Academy.AppServices.Specifications;
 using SolarLab.Academy.AppServices.Users.Repositories;
 using SolarLab.Academy.AppServices.Users.Services;
@@ -17,13 +18,15 @@ namespace SolarLab.Academy.UnitTests.Users.Services;
 public class UserServiceTests
 {
     private readonly Mock<IUserRepository> _userRepositoryMock;
+    private readonly Mock<INotificationService> _notificationServiceMock;
     private readonly IUserService _userService;
 
     public UserServiceTests()
     {
         Mock<IMapper> mapper = new Mock<IMapper>();
         _userRepositoryMock = new Mock<IUserRepository>();
-        _userService = new UserService(_userRepositoryMock.Object, mapper.Object);
+        _notificationServiceMock = new Mock<INotificationService>();
+        _userService = new UserService(_userRepositoryMock.Object, mapper.Object, _notificationServiceMock.Object);
     }
 
     [Fact]
